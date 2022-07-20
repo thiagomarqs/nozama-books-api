@@ -1,7 +1,7 @@
 package com.nozama.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.query.criteria.internal.expression.AbstractTupleElement;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -9,16 +9,19 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
-@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Livro  {
 
     @Id @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Size(max = 255, message = "O título do livro não deve exceder 255 caracteres.")
@@ -43,7 +46,8 @@ public class Livro  {
 
     @ManyToMany(mappedBy = "livros")
     @NotEmpty(message = "O livro deve estar associado a pelo menos uma categoria.")
-    private Set<Categoria> categorias = new HashSet<Categoria>();
+    @JsonManagedReference
+    private Set<Categoria> categorias = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "FormatoId")
@@ -67,7 +71,8 @@ public class Livro  {
 
     @ManyToMany(mappedBy = "livros")
     @NotEmpty(message = "O livro deve estar associado a pelo menos um autor.")
-    private Set<Autor> autores = new HashSet();
+    @JsonManagedReference
+    private Set<Autor> autores = new HashSet<>();
 
     @Column(name = "DataPublicacao", nullable = false)
     private LocalDate dataPublicacao;
@@ -105,6 +110,20 @@ public class Livro  {
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
 
+    public void deleteCategoria(Categoria categoria) {
+        if(isInCategoria(categoria)) {
+            this.categorias.remove(categoria);
+            categoria.deleteLivro(this);
+        }
+    }
+
+    public void deleteAutor(Autor autor) {
+        if(hasAutor(autor)) {
+            autores.remove(autor);
+            autor.deleteLivro(this);
+        }
+    }
+
     public void addCategoria(Categoria categoria) {
         if(!isInCategoria(categoria)) {
             this.categorias.add(categoria);
@@ -113,5 +132,9 @@ public class Livro  {
 
     public boolean isInCategoria(Categoria categoria) {
         return this.categorias.contains(categoria);
+    }
+
+    public boolean hasAutor(Autor autor) {
+        return autores.contains(autor);
     }
 }

@@ -3,24 +3,35 @@ package com.nozama.api.service;
 import com.nozama.api.dto.request.livro.LivroPostRequest;
 import com.nozama.api.dto.request.livro.LivroPutRequest;
 import com.nozama.api.dto.response.livro.LivroGetResponse;
+import com.nozama.api.entity.Categoria;
 import com.nozama.api.entity.Livro;
+import com.nozama.api.repository.AutorRepository;
+import com.nozama.api.repository.CategoriaRepository;
 import com.nozama.api.repository.LivroRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class LivroService {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     private LivroRepository livroRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private AutorRepository autorRepository;
 
     public LivroGetResponse getById(Long id) throws NoSuchElementException{
         var livro = livroRepository.findById(id).orElseThrow();
@@ -55,7 +66,13 @@ public class LivroService {
         if(!livroRepository.existsById(id)) {
             throw new NoSuchElementException(String.format("Livro de id %d não existe.", id));
         }
-        livroRepository.deleteById(id);
+
+        var livro = livroRepository.getReferenceById(id);
+
+        livro.getCategorias().forEach(c -> livro.deleteCategoria(c));
+        livro.getAutores().forEach(a -> livro.deleteAutor(a));
+
+        livroRepository.delete(livro);
     }
 
 

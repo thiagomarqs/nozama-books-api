@@ -1,26 +1,27 @@
 package com.nozama.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
-@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Categoria implements Serializable {
 
     @Id @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Size(max = 100, message = "O nome da categoria não deve exceder 100 caracteres.")
@@ -39,8 +40,15 @@ public class Categoria implements Serializable {
             joinColumns = {@JoinColumn(name = "CategoriaId", referencedColumnName = "Id")},
             inverseJoinColumns = {@JoinColumn(name = "LivroId", referencedColumnName = "Id")}
     )
-    @JsonIgnore
-    private Set<Livro> livros = new HashSet<Livro>();
+    @JsonBackReference
+    private Set<Livro> livros = new HashSet<>();
+
+    public void deleteLivro(Livro livro) {
+        if(hasLivro(livro)) {
+            this.livros.remove(livro);
+            livro.getCategorias().remove(this);
+        }
+    }
 
     public void addLivro(Livro livro) {
         if(!this.hasLivro(livro)) {
