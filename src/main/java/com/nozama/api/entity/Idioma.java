@@ -1,21 +1,23 @@
 package com.nozama.api.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
-@Data
-@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Idioma implements Serializable {
 
     @Id @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Size(max = 25, message = "O idioma não deve exceder 25 caracteres.")

@@ -22,7 +22,7 @@ public class BaseLivroDto implements Serializable {
     private String descricao;
     private String urlImagem;
     private Double preco;
-    private Set<Categoria> categorias = new HashSet<>();
+    private Set<BaseCategoriaDto> categorias = new HashSet<>();
     private Formato formato;
     private Integer paginas;
     private Idioma idioma;

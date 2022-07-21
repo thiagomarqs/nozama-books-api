@@ -1,11 +1,14 @@
 package com.nozama.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,6 +20,11 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope = Categoria.class
+)
 public class Categoria implements Serializable {
 
     @Id @Column(name = "Id")
@@ -40,8 +48,11 @@ public class Categoria implements Serializable {
             joinColumns = {@JoinColumn(name = "CategoriaId", referencedColumnName = "Id")},
             inverseJoinColumns = {@JoinColumn(name = "LivroId", referencedColumnName = "Id")}
     )
-    @JsonBackReference
     private Set<Livro> livros = new HashSet<>();
+
+    @NotNull(message = "Não deve ser nulo")
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
 
     public void deleteLivro(Livro livro) {
         if(hasLivro(livro)) {

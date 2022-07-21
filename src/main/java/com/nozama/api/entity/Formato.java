@@ -1,7 +1,6 @@
 package com.nozama.api.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,12 +9,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Data
-@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Formato implements Serializable {
 
     @Id @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Size(max = 100, message = "O formato do livro não deve exceder 100 caracteres.")

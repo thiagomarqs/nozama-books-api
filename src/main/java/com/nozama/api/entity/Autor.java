@@ -1,7 +1,9 @@
 package com.nozama.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +20,11 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope = Autor.class
+)
 public class Autor implements Serializable {
 
     @Id @Column(name = "Id")
@@ -36,7 +43,6 @@ public class Autor implements Serializable {
         joinColumns = {@JoinColumn(name = "AutorId", referencedColumnName = "Id")},
         inverseJoinColumns = {@JoinColumn(name = "LivroId", referencedColumnName = "Id")}
     )
-    @JsonBackReference
     private Set<Livro> livros = new HashSet<>();
 
     public void deleteLivro(Livro livro) {

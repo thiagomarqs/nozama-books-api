@@ -1,4 +1,5 @@
-package com.nozama.api.dto.request.livro;
+package com.nozama.api.dto.request.categoria;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LivroPutRequest extends BaseLivroRequest {
+public class CategoriaPutRequest extends BaseCategoriaRequest{
 
     private Boolean ativo;
-
 }

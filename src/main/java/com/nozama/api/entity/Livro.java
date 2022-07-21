@@ -1,6 +1,8 @@
 package com.nozama.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
@@ -17,6 +19,11 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope = Livro.class
+)
 public class Livro  {
 
     @Id @Column(name = "Id")
@@ -46,7 +53,6 @@ public class Livro  {
 
     @ManyToMany(mappedBy = "livros")
     @NotEmpty(message = "O livro deve estar associado a pelo menos uma categoria.")
-    @JsonManagedReference
     private Set<Categoria> categorias = new HashSet<>();
 
     @ManyToOne
@@ -71,7 +77,6 @@ public class Livro  {
 
     @ManyToMany(mappedBy = "livros")
     @NotEmpty(message = "O livro deve estar associado a pelo menos um autor.")
-    @JsonManagedReference
     private Set<Autor> autores = new HashSet<>();
 
     @Column(name = "DataPublicacao", nullable = false)
@@ -102,11 +107,11 @@ public class Livro  {
     @Column(name = "QuantidadeDisponivel", nullable = false)
     private Integer quantidadeDisponivel;
 
-    @NotNull
+    @NotNull(message = "Não deve ser nulo")
     @Column(name = "DataHoraRegistro", nullable = false)
     private LocalDateTime dataHoraRegistro;
 
-    @NotNull
+    @NotNull(message = "Não deve ser nulo")
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
 

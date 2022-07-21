@@ -1,7 +1,6 @@
 package com.nozama.api.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -11,12 +10,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Data
-@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Editora implements Serializable {
 
     @Id @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Size(max = 255, message = "O nome da editora não deve exceder 255 caracteres.")

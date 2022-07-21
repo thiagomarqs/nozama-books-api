@@ -57,7 +57,7 @@ public class LivroService {
             throw new NoSuchElementException(String.format("Livro de id %d não existe.", id));
         }
 
-        var livro = livroRepository.getReferenceById(id);
+        var livro = livroRepository.findById(id).orElseThrow();
         BeanUtils.copyProperties(request, livro);
         return livroRepository.save(livro);
     }

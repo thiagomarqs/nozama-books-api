@@ -12,7 +12,7 @@ INSERT INTO Autor (Nome) VALUES ('Clarice Lispector');
 
 INSERT INTO Idioma (Idioma, Codigo) VALUES ('Português', 'pt');
 
-INSERT INTO Categoria (Categoria, Descricao) VALUES ('Fantasia', 'Fantasia é um gênero da ficção em que se usa geralmente fenômenos sobrenaturais, mágicos e outros como um elemento primário do enredo, tema ou configuração.');
+INSERT INTO Categoria (Categoria, Descricao, Ativo) VALUES ('Fantasia', 'Fantasia é um gênero da ficção em que se usa geralmente fenômenos sobrenaturais, mágicos e outros como um elemento primário do enredo, tema ou configuração.', true);
 
 INSERT INTO Livro (
     Titulo,
