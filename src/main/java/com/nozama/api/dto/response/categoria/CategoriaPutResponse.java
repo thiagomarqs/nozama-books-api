@@ -1,16 +1,14 @@
-package com.nozama.api.dto.response.livro;
+package com.nozama.api.dto.response.categoria;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class LivroPutResponse extends BaseLivroResponse {
+public class CategoriaPutResponse extends BaseCategoriaResponse {
     private boolean ativo;
 }

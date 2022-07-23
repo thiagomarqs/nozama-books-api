@@ -5,6 +5,8 @@ import com.nozama.api.dto.request.categoria.CategoriaPutRequest;
 import com.nozama.api.dto.request.livro.LivroPostRequest;
 import com.nozama.api.dto.request.livro.LivroPutRequest;
 import com.nozama.api.dto.response.categoria.CategoriaGetResponse;
+import com.nozama.api.dto.response.categoria.CategoriaPostResponse;
+import com.nozama.api.dto.response.categoria.CategoriaPutResponse;
 import com.nozama.api.entity.Categoria;
 import com.nozama.api.entity.Livro;
 import com.nozama.api.repository.CategoriaRepository;
@@ -42,20 +44,20 @@ public class CategoriaService {
                 .toList();
     }
 
-    public Categoria create(CategoriaPostRequest request) {
+    public CategoriaPostResponse create(CategoriaPostRequest request) {
         var mappedCategoria = modelMapper.map(request, Categoria.class);
         mappedCategoria.setAtivo(true);
-        return categoriaRepository.save(mappedCategoria);
+        return modelMapper.map(categoriaRepository.save(mappedCategoria), CategoriaPostResponse.class);
     }
 
-    public Categoria update(Long id, CategoriaPutRequest request) throws NoSuchElementException {
+    public CategoriaPutResponse update(Long id, CategoriaPutRequest request) throws NoSuchElementException {
         if(!categoriaRepository.existsById(id)) {
             throw new NoSuchElementException(String.format("Categoria de id %d não existe.", id));
         }
 
         var categoria = categoriaRepository.findById(id).orElseThrow();
         BeanUtils.copyProperties(request, categoria);
-        return categoriaRepository.save(categoria);
+        return modelMapper.map(categoriaRepository.save(categoria), CategoriaPutResponse.class);
     }
 
     public void delete(Long id) throws NoSuchElementException {

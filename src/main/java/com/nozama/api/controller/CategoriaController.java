@@ -3,6 +3,8 @@ package com.nozama.api.controller;
 import com.nozama.api.dto.request.categoria.CategoriaPostRequest;
 import com.nozama.api.dto.request.categoria.CategoriaPutRequest;
 import com.nozama.api.dto.response.categoria.CategoriaGetResponse;
+import com.nozama.api.dto.response.categoria.CategoriaPostResponse;
+import com.nozama.api.dto.response.categoria.CategoriaPutResponse;
 import com.nozama.api.entity.Categoria;
 import com.nozama.api.service.CategoriaService;
 import com.nozama.api.utils.SpringUri;
@@ -32,14 +34,14 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> create(@RequestBody CategoriaPostRequest request) {
+    public ResponseEntity<CategoriaPostResponse> create(@RequestBody CategoriaPostRequest request) {
         var createdCategoria = categoriaService.create(request);
         URI location = SpringUri.buildLocationForNewResource(createdCategoria.getId());
         return ResponseEntity.created(location).body(createdCategoria);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> update(@PathVariable("id") Long id, @RequestBody CategoriaPutRequest request) {
+    public ResponseEntity<CategoriaPutResponse> update(@PathVariable("id") Long id, @RequestBody CategoriaPutRequest request) {
         return ResponseEntity.ok(categoriaService.update(id, request));
     }
 
