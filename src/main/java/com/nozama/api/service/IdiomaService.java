@@ -1,6 +1,5 @@
 package com.nozama.api.service;
 
-import com.nozama.api.dto.base.IdiomaDto;
 import com.nozama.api.dto.request.idioma.IdiomaRequest;
 import com.nozama.api.dto.response.idioma.IdiomaResponse;
 import com.nozama.api.entity.Idioma;
