@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseCategoriaDto implements Serializable {
+public class IdiomaDto implements Serializable {
 
-    private String categoria;
-    private String descricao;
+    private String idioma;
+    private String codigo;
 }

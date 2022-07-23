@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LivroPutRequest extends BaseLivroRequest {
+public class LivroPutRequest extends LivroRequest {
 
     private Boolean ativo;
 

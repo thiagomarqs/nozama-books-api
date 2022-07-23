@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,13 +15,13 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseLivroDto implements Serializable {
+public class LivroDto implements Serializable {
 
     private String titulo;
     private String descricao;
     private String urlImagem;
     private Double preco;
-    private Set<BaseCategoriaDto> categorias = new HashSet<>();
+    private Set<CategoriaDto> categorias = new HashSet<>();
     private Formato formato;
     private Integer paginas;
     private Idioma idioma;

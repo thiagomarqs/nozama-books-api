@@ -1,6 +1,6 @@
 package com.nozama.api.dto.response.livro;
 
-import com.nozama.api.dto.base.BaseLivroDto;
+import com.nozama.api.dto.base.LivroDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseLivroResponse extends BaseLivroDto {
+public class LivroResponse extends LivroDto {
 
     private Long id;
     private LocalDateTime dataHoraRegistro;

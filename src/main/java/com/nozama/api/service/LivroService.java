@@ -3,6 +3,8 @@ package com.nozama.api.service;
 import com.nozama.api.dto.request.livro.LivroPostRequest;
 import com.nozama.api.dto.request.livro.LivroPutRequest;
 import com.nozama.api.dto.response.livro.LivroGetResponse;
+import com.nozama.api.dto.response.livro.LivroPostResponse;
+import com.nozama.api.dto.response.livro.LivroPutResponse;
 import com.nozama.api.entity.Categoria;
 import com.nozama.api.entity.Livro;
 import com.nozama.api.repository.AutorRepository;
@@ -45,27 +47,21 @@ public class LivroService {
                 .toList();
     }
 
-    public Livro create(LivroPostRequest request) {
+    public LivroPostResponse create(LivroPostRequest request) {
         var mappedLivro = modelMapper.map(request, Livro.class);
         mappedLivro.setDataHoraRegistro(LocalDateTime.now());
         mappedLivro.setAtivo(true);
-        return livroRepository.save(mappedLivro);
+        return modelMapper.map(livroRepository.save(mappedLivro), LivroPostResponse.class);
     }
 
-    public Livro update(Long id, LivroPutRequest request) throws NoSuchElementException {
-        if(!livroRepository.existsById(id)) {
-            throw new NoSuchElementException(String.format("Livro de id %d não existe.", id));
-        }
-
+    public LivroPutResponse update(Long id, LivroPutRequest request) throws NoSuchElementException {
         var livro = livroRepository.findById(id).orElseThrow();
         BeanUtils.copyProperties(request, livro);
-        return livroRepository.save(livro);
+        return modelMapper.map(livroRepository.save(livro), LivroPutResponse.class);
     }
 
     public void delete(Long id) throws NoSuchElementException {
-        if(!livroRepository.existsById(id)) {
-            throw new NoSuchElementException(String.format("Livro de id %d não existe.", id));
-        }
+        if(!livroRepository.existsById(id)) throw new NoSuchElementException();
 
         var livro = livroRepository.getReferenceById(id);
 

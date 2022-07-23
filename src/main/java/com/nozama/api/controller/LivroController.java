@@ -3,6 +3,8 @@ package com.nozama.api.controller;
 import com.nozama.api.dto.request.livro.LivroPostRequest;
 import com.nozama.api.dto.request.livro.LivroPutRequest;
 import com.nozama.api.dto.response.livro.LivroGetResponse;
+import com.nozama.api.dto.response.livro.LivroPostResponse;
+import com.nozama.api.dto.response.livro.LivroPutResponse;
 import com.nozama.api.entity.Livro;
 import com.nozama.api.service.LivroService;
 import com.nozama.api.utils.SpringUri;
@@ -34,14 +36,14 @@ public class LivroController {
     }
 
     @PostMapping
-    public ResponseEntity<Livro> create(@RequestBody LivroPostRequest request) {
+    public ResponseEntity<LivroPostResponse> create(@RequestBody LivroPostRequest request) {
         var createdLivro = livroService.create(request);
         URI location = SpringUri.buildLocationForNewResource(createdLivro.getId());
         return ResponseEntity.created(location).body(createdLivro);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> update(@PathVariable("id") Long id, @RequestBody LivroPutRequest request) {
+    public ResponseEntity<LivroPutResponse> update(@PathVariable("id") Long id, @RequestBody LivroPutRequest request) {
         return ResponseEntity.ok(livroService.update(id, request));
     }
 

@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoriaPutResponse extends BaseCategoriaResponse {
+public class CategoriaPutResponse extends CategoriaResponse {
     private boolean ativo;
 }

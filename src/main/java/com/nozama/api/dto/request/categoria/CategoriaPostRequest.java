@@ -1,4 +1,4 @@
 package com.nozama.api.dto.request.categoria;
 
-public class CategoriaPostRequest extends BaseCategoriaRequest{
+public class CategoriaPostRequest extends CategoriaRequest {
 }

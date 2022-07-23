@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaPutRequest extends BaseCategoriaRequest{
+public class CategoriaPutRequest extends CategoriaRequest {
 
     private Boolean ativo;
 }

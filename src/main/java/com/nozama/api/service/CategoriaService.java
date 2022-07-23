@@ -51,19 +51,13 @@ public class CategoriaService {
     }
 
     public CategoriaPutResponse update(Long id, CategoriaPutRequest request) throws NoSuchElementException {
-        if(!categoriaRepository.existsById(id)) {
-            throw new NoSuchElementException(String.format("Categoria de id %d não existe.", id));
-        }
-
         var categoria = categoriaRepository.findById(id).orElseThrow();
         BeanUtils.copyProperties(request, categoria);
         return modelMapper.map(categoriaRepository.save(categoria), CategoriaPutResponse.class);
     }
 
     public void delete(Long id) throws NoSuchElementException {
-        if(!categoriaRepository.existsById(id)) {
-            throw new NoSuchElementException(String.format("Categoria de id %d não existe.", id));
-        }
+        if(!categoriaRepository.existsById(id)) throw new NoSuchElementException();
 
         var categoria = categoriaRepository.getReferenceById(id);
         categoria.getLivros().forEach(l -> l.deleteCategoria(categoria));
